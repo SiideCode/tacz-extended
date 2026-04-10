@@ -6,7 +6,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [],
   "client": [
-    "ModernKineticGunScriptAPIMixin"
+    "item.ModernKineticGunScriptAPIMixin"
   ],
   "server": [],
   "injectors": {

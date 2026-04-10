@@ -29,5 +29,17 @@ subprojects {
                 includeGroup("curse.maven")
             }
         }
+
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = "jitpack"
+                    url = 'https://jitpack.io'
+                }
+            }
+            filter {
+                includeGroup("com.github.FiguraMC.luaj")
+            }
+        }
     }
 }
