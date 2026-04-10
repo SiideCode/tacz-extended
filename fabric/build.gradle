@@ -1,0 +1,53 @@
+plugins {
+    id 'multiloader-loader'
+    id 'fabric-loom'
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings loom.layered {
+        officialMojangMappings()
+        parchment("org.parchmentmc.data:parchment-${parchment_minecraft}:${parchment_version}@zip")
+    }
+
+    //tacz
+    modImplementation "maven.modrinth:tacz-refabricated:1.21.1-0.5.0-forge1.1.7-hotfix2"
+
+    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+
+    //luaj
+    implementation("com.github.FiguraMC.luaj:luaj-core:3.0.8-figura") {
+        exclude group: 'org.apache.commons', module: 'commons-lang3'
+    }
+    implementation("com.github.FiguraMC.luaj:luaj-jse:3.0.8-figura") {
+        exclude group: 'org.apache.commons', module: 'commons-lang3'
+    }
+    implementation("org.apache.bcel:bcel:6.6.1") {
+        exclude group: 'org.apache.commons', module: 'commons-lang3'
+    }
+}
+
+loom {
+    def aw = project(':common').file("src/main/resources/${mod_id}.accesswidener")
+    if (aw.exists()) {
+        accessWidenerPath.set(aw)
+    }
+    mixin {
+        defaultRefmapName.set("${mod_id}.refmap.json")
+    }
+    runs {
+        client {
+            client()
+            setConfigName('Fabric Client')
+            ideConfigGenerated(true)
+            runDir('runs/client')
+        }
+        server {
+            server()
+            setConfigName('Fabric Server')
+            ideConfigGenerated(true)
+            runDir('runs/server')
+        }
+    }
+}
