@@ -4,7 +4,14 @@
   "package": "com.sidecode.taczextended.mixin",
   "refmap": "${mod_id}.refmap.json",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [],
+  "mixins": [
+    "api.GunPropertiesMixin",
+    "api.item.IGunMixin",
+    "api.item.builder.GunItemBuilderMixin",
+    "resource.modifier.AttachmentPropertyManagerMixin",
+    "resource.pojo.data.gun.GunDataMixin",
+    "util.AttachmentDataUtilsMixin"
+  ],
   "client": [
     "item.ModernKineticGunScriptAPIMixin"
   ],

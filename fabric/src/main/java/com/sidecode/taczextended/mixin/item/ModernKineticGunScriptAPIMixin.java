@@ -1,5 +1,6 @@
 package com.sidecode.taczextended.mixin.item;
 
+import com.sidecode.taczextended.Constants;
 import com.tacz.guns.api.item.gun.AbstractGunItem;
 import com.tacz.guns.api.item.gun.FireMode;
 import net.minecraft.world.item.ItemStack;
@@ -8,23 +9,23 @@ import com.tacz.guns.item.ModernKineticGunScriptAPI;
 
 import org.luaj.vm2.LuaValue;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 
-
-//TODO: at first just make all the gun stats accessible to be get/set
-//TODO: add input passing
-//TODO: make sure you can change ammo types via scripts, then make it editable via configs
 @Mixin(ModernKineticGunScriptAPI.class)
 @SuppressWarnings("unused")
 public abstract class ModernKineticGunScriptAPIMixin {
-    @Shadow
+    @Shadow(remap = false)
     private AbstractGunItem abstractGunItem;
-    @Shadow
+    @Shadow(remap = false)
     private ItemStack itemStack;
 
-    public void setFireMode(int firemode)
-    {
-        /*TODO: somehow automate turning lua side firemode (number) into java side firemode (enum).
-        Maybe writing the  some sort of a function reference into the lua table will work.*/
-        abstractGunItem.setFireMode(itemStack, FireMode.values()[firemode]);
+    @Unique
+    public void setFireMode(long firemode) {
+        abstractGunItem.setFireMode(itemStack, getFireModeFromLong(firemode));
+    }
+
+    @Unique
+    private FireMode getFireModeFromLong(long firemode) {
+        return FireMode.values()[(int) firemode];
     }
 }

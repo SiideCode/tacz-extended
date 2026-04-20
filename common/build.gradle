@@ -21,6 +21,17 @@ dependencies {
     // fabric and neoforge both bundle mixinextras, so it is safe to use it in common
     compileOnly "io.github.llamalad7:mixinextras-common:0.3.5"
     annotationProcessor "io.github.llamalad7:mixinextras-common:0.3.5"
+
+    //luaj
+    implementation("com.github.FiguraMC.luaj:luaj-core:3.0.8-figura") {
+        exclude group: 'org.apache.commons', module: 'commons-lang3'
+    }
+    implementation("com.github.FiguraMC.luaj:luaj-jse:3.0.8-figura") {
+        exclude group: 'org.apache.commons', module: 'commons-lang3'
+    }
+    implementation("org.apache.bcel:bcel:6.6.1") {
+        exclude group: 'org.apache.commons', module: 'commons-lang3'
+    }
 }
 
 configurations {

@@ -42,6 +42,7 @@ neoForge {
 }
 
 dependencies {
+    implementation("maven.modrinth:tacz-1.21.1:1.1.7-hotfix-r4")
 
     //luaj
     implementation("com.github.FiguraMC.luaj:luaj-core:3.0.8-figura") {
