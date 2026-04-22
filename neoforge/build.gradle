@@ -43,17 +43,6 @@ neoForge {
 
 dependencies {
     implementation("maven.modrinth:tacz-1.21.1:1.1.7-hotfix-r4")
-
-    //luaj
-    implementation("com.github.FiguraMC.luaj:luaj-core:3.0.8-figura") {
-        exclude group: 'org.apache.commons', module: 'commons-lang3'
-    }
-    implementation("com.github.FiguraMC.luaj:luaj-jse:3.0.8-figura") {
-        exclude group: 'org.apache.commons', module: 'commons-lang3'
-    }
-    implementation("org.apache.bcel:bcel:6.6.1") {
-        exclude group: 'org.apache.commons', module: 'commons-lang3'
-    }
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
