@@ -1,11 +1,5 @@
 package com.sidecode.taczextended.mixin.util;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.llamalad7.mixinextras.sugar.Share;
-import com.llamalad7.mixinextras.sugar.ref.LocalRef;
-import com.sidecode.taczextended.resource.modifier.custom.MagSizeModifier;
-import com.tacz.guns.resource.modifier.AttachmentPropertyManager;
 import com.tacz.guns.resource.pojo.data.attachment.Modifier;
 import com.tacz.guns.resource.pojo.data.gun.GunData;
 import com.tacz.guns.util.AttachmentDataUtils;
@@ -25,29 +19,9 @@ public abstract class AttachmentDataUtilsMixin {
         return List.of();
     }
 
-    @Shadow
-    public static int getMagExtendLevel(ItemStack gunItem, GunData gunData) {
-        return 0;
-    }
-
-    @Inject(method="getAmmoCountWithAttachment", at=@At(value="INVOKE", target="com/tacz/guns/resource/pojo/data/gun/GunData.getExtendedMagAmmoAmount ()[I"), remap = false)
-    private static void gunItemPasser(ItemStack gunItem, GunData gunData, CallbackInfoReturnable<Integer> cir, @Share("gunItem") LocalRef<ItemStack> item) {
-        item.set(gunItem);
-    }
-
-    @WrapOperation(method="getAmmoCountWithAttachment", at=@At(value="INVOKE", target="com/tacz/guns/resource/pojo/data/gun/GunData.getExtendedMagAmmoAmount()[I"), remap = false)
-    private static int[] magSizeWrapper(GunData gunData, Operation<int[]> original, @Share("gunItem") LocalRef<ItemStack> item)
+    @Inject(method="getAmmoCountWithAttachment", at=@At(value="RETURN"), remap = false)
+    private static void magSizeWrapper(ItemStack gunItem, GunData gunData, CallbackInfoReturnable<Integer> cir)
     {
-        int[] ammoCount = original.call(gunData);
-        if (ammoCount != null)
-        {
-            ItemStack gunItem = item.get();
-            int magLevel = getMagExtendLevel(gunItem, gunData);
-            if (magLevel != 0) {
-                List<Modifier> magSizeMods = getModifiers(gunItem, gunData, MagSizeModifier.ID);
-                ammoCount[magLevel - 1] = Math.toIntExact(Math.round(AttachmentPropertyManager.eval(magSizeMods, ammoCount[magLevel - 1])));
-            }
-        }
-        return ammoCount;
+        //TODO: fix this. should check for if there's an extended mag, and then add to the extended mag if there is, if there isn't one - add to the existing mag
     }
 }
